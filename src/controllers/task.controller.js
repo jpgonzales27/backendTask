@@ -1,8 +1,13 @@
 const db = require("../db");
 
 //listar tareas
-const getTasks = (req, res) => {
-  res.send("listar tareas");
+const getTasks = async (req, res) => {
+  try {
+    const result = await db.query("select * from task");
+    res.json(result.rows);
+  } catch (error) {
+    res.json({ error: error.message });
+  }
 };
 
 //listar 1 tarea por ID
