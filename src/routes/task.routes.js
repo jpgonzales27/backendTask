@@ -14,7 +14,7 @@ const router = Router();
 router.get("/tasks", getTasks);
 
 //listar 1 tarea por ID
-router.get("/tasks/10", getTask);
+router.get("/tasks/:id", getTask);
 
 //Crear una tarea
 router.post("/tasks", createTask);

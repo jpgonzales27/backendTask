@@ -11,7 +11,23 @@ const getTasks = async (req, res) => {
 };
 
 //listar 1 tarea por ID
-const getTask = (req, res) => {
+const getTask = async (req, res) => {
+  //req.params.id -> obtiene el parametro que mandamos por la url
+  try {
+    const { id } = req.params;
+    const result = await db.query("select * from task where id = $1", [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        message: "Task not found",
+      });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+
   res.send("listar una sola tarea");
 };
 
