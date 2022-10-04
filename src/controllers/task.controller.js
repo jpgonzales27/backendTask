@@ -1,3 +1,5 @@
+const db = require("../db");
+
 //listar tareas
 const getTasks = (req, res) => {
   res.send("listar tareas");
@@ -9,7 +11,18 @@ const getTask = (req, res) => {
 };
 
 //Crear una tarea
-const createTask = (req, res) => {
+const createTask = async (req, res) => {
+  const { title, description } = req.body;
+
+  try {
+    const result = await db.query(
+      "insert into task (title, description) values ($1,$2) returning *",
+      [title, description]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.json({ error: error.message });
+  }
   res.send("crear una tarea");
 };
 
