@@ -48,8 +48,17 @@ const createTask = async (req, res) => {
 };
 
 //Eliminar una tarea por Id
-const deleteTask = (req, res) => {
-  res.send("eliminando una tarea");
+const deleteTask = async (req, res) => {
+  const { id } = req.params;
+  const result = await db.query("delete from task where id = $1 returning *", [
+    id,
+  ]);
+
+  if (result.rowCount === 0)
+    return res.status(404).send({ message: "task not found" });
+
+  //   res.json(result.rows[0]); // retona 200 y muestra el objeto eliminado
+  res.sendStatus(204); // solo retorna 204 cuando elimina
 };
 
 //Actualizar tarea

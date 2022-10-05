@@ -20,7 +20,7 @@ router.get("/tasks/:id", getTask);
 router.post("/tasks", createTask);
 
 //Eliminar una tarea por Id
-router.delete("/tasks/10", deleteTask);
+router.delete("/tasks/:id", deleteTask);
 
 //Actualizar tarea
 router.put("/tasks", updateTask);
