@@ -23,6 +23,6 @@ router.post("/tasks", createTask);
 router.delete("/tasks/:id", deleteTask);
 
 //Actualizar tarea
-router.put("/tasks", updateTask);
+router.put("/tasks/:id", updateTask);
 
 module.exports = router;

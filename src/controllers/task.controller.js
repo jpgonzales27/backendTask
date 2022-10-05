@@ -62,8 +62,21 @@ const deleteTask = async (req, res) => {
 };
 
 //Actualizar tarea
-const updateTask = (req, res) => {
-  res.send("actualizando tarea");
+const updateTask = async (req, res) => {
+  const { id } = req.params;
+  const { title, description } = req.body;
+
+  const result = await db.query(
+    "update task set title= $1, description= $2 where id = $3 returning *",
+    [title, description, id]
+  );
+
+  if (result.rows.length === 0)
+    return res.status(404).json({
+      message: "task not found",
+    });
+
+  return res.json(result.rows[0]);
 };
 
 module.exports = {
